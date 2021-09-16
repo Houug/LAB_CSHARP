@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
 
-namespace LAB_1
+namespace LAB_CSHARP
 {
     class Program
     {

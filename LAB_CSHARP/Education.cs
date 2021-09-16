@@ -1,4 +1,4 @@
-﻿namespace LAB_1
+﻿namespace LAB_CSHARP
 {
     enum Education
     {
