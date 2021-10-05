@@ -6,17 +6,16 @@ using System.Threading.Tasks;
 
 namespace LAB_CSHARP
 {
-    class Person
+    class Person : IDateAndCopy
     {
-        private string name;
-        private string surname;
-        private DateTime birthday;
+        protected string name;
+        protected string surname;
 
         public Person(string nameValue, string surnameValue, DateTime birthdayValue)
         {
             name = nameValue;
             surname = surnameValue;
-            birthday = birthdayValue;
+            Date = birthdayValue;
         }
 
         public Person()
@@ -52,17 +51,11 @@ namespace LAB_CSHARP
             }
         }
 
-        public DateTime Birthday
-        {
-            get
-            {
-                return birthday;
-            }
+        public DateTime Date { get; set; }
 
-            set
-            {
-                birthday = value;
-            }
+        public object DeepCopy()
+        {
+            return new Person(Name, Surname, Date);
         }
 
         public int BirthdayYear
@@ -80,12 +73,39 @@ namespace LAB_CSHARP
 
         public override string ToString()
         {
-            return string.Format("{0} {1} {2}.{3}.{4}", surname, name, birthday.Day, birthday.Month, birthday.Year);
+            return string.Format("{0} {1} {2}.{3}.{4}", surname, name, Date.Day, Date.Month, Date.Year);
         }
 
         public virtual string ToShortString()
         {
             return string.Format("{0} {1}", surname, name);
         }
+
+        public static bool operator ==(Person obj1, Person obj2)
+        {
+            return obj1.Name == obj2.Name & obj1.Surname == obj2.Surname & obj1.Date == obj2.Date;
+        }
+
+        public static bool operator !=(Person obj1, Person obj2)
+        {
+            return !(obj1 == obj2);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+                return false;
+
+            if (this.GetType() != obj.GetType())
+                return false;
+
+            return (Person)obj == this;
+        }
+
+        public override int GetHashCode()
+        {
+            return this.ToString().GetHashCode();
+        }
+
     }
 }

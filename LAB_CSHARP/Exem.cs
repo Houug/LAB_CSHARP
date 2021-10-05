@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LAB_CSHARP
 {
-    class Exem
+    class Exem : IDateAndCopy
     {
         public string NameOfDiscipline { get; set; }
         public int Mark { get; set; }
@@ -23,6 +23,11 @@ namespace LAB_CSHARP
             NameOfDiscipline = "NAN";
             Mark = -1;
             Date = new DateTime(1901, 1, 1);
+        }
+
+        public object DeepCopy()
+        {
+            return new Exem(NameOfDiscipline, Mark, Date);
         }
 
         public override string ToString()

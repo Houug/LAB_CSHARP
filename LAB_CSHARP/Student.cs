@@ -1,41 +1,49 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace LAB_CSHARP
 {
-    class Student
+    class Student : Person
     {
-        private Person personData;
         private Education formatOfEducation;
         private int groupNumber;
-        private Exem[] passedExems = null;
+        private System.Collections.ArrayList passedExems;
+        private System.Collections.ArrayList passedTests;
 
         public Student(Person personDataValue, Education formatOfEducationValue, int groupNumberValue)
         {
-            personData = personDataValue;
+            Name = personDataValue.Name;
+            Surname = personDataValue.Surname;
+            Date = personDataValue.Date;
             formatOfEducation = formatOfEducationValue;
             groupNumber = groupNumberValue;
         }
 
         public Student()
         {
-            personData = new Person();
+            Person temp = new Person();
+            Name = temp.Name;
+            Surname = temp.Surname;
+            Date = temp.Date;
             formatOfEducation = Education.Вachelor;
             groupNumber = 10;
         }
 
-        public Person PersonData
-        { 
+        public Person Info
+        {
             get
             {
-                return personData;
+                return new Person(Name, Surname, Date);
             }
             set
             {
-                personData = value;
+                Name = value.Name;
+                Surname = value.Surname;
+                Date = value.Date;
             }
         }
 
@@ -63,7 +71,7 @@ namespace LAB_CSHARP
             }
         }
 
-        public Exem[] PassedExems
+        public ArrayList PassedExems
         {
             get
             {
@@ -90,7 +98,7 @@ namespace LAB_CSHARP
                     {
                         result += item.Mark;
                     }
-                    return result / passedExems.Length;
+                    return result / passedExems.Count;
                 }
             }
         }
