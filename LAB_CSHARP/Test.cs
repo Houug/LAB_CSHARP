@@ -27,11 +27,11 @@ namespace LAB_CSHARP
         {
             if (Status)
             {
-                return string.Format("{0} - сдано", Name);
+                return string.Format("{0} - сдано\n", Name);
             }
             else
             {
-                return string.Format("{0} - не сдано", Name);
+                return string.Format("{0} - не сдано\n", Name);
             }
         }
     }

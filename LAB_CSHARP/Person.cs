@@ -53,7 +53,7 @@ namespace LAB_CSHARP
 
         public DateTime Date { get; set; }
 
-        public object DeepCopy()
+        public virtual object DeepCopy()
         {
             return new Person(Name, Surname, Date);
         }

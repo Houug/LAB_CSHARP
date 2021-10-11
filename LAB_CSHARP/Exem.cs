@@ -32,7 +32,7 @@ namespace LAB_CSHARP
 
         public override string ToString()
         {
-            return string.Format("Название: {0}, Оценка: {1}, Дата: {2}.{3}.{4}", NameOfDiscipline, Mark, Date.Day, Date.Month, Date.Year);
+            return string.Format("Название: {0}, Оценка: {1}, Дата: {2}.{3}.{4}\n", NameOfDiscipline, Mark, Date.Day, Date.Month, Date.Year);
         }
     }
 }

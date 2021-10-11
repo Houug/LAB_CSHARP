@@ -11,8 +11,8 @@ namespace LAB_CSHARP
     {
         private Education formatOfEducation;
         private int groupNumber;
-        private System.Collections.ArrayList passedExems;
-        private System.Collections.ArrayList passedTests;
+        private ArrayList passedExems;
+        private ArrayList passedTests;
 
         public Student(Person personDataValue, Education formatOfEducationValue, int groupNumberValue)
         {
@@ -67,6 +67,10 @@ namespace LAB_CSHARP
             }
             set
             {
+                if (value <= 100 | value > 599)
+                {
+                    throw new Exception("Номер группы должен быть в интервале от 100 до 599");
+                }
                 groupNumber = value;
             }
         }
@@ -81,6 +85,11 @@ namespace LAB_CSHARP
             {
                 passedExems = value;
             }
+        }
+
+        public override object DeepCopy()
+        {
+            return new Student(new Person(Name, Surname, Date), FormatOfEducation, GroupNumber);
         }
 
         public double AverageMark
@@ -113,23 +122,35 @@ namespace LAB_CSHARP
 
         public void AddExems(params Exem[] newExems)
         {
-            Exem[] tempArray = new Exem[passedExems.Length + newExems.Length];
-            int i = 0;
-            foreach (Exem item in passedExems)
+            foreach (Exem ex in newExems)
             {
-                tempArray[i] = item;
-                i++;
+                passedExems.Add(ex);
             }
-
-            foreach (Exem item in newExems)
-            {
-                tempArray[i] = item;
-                i++;
-            }
-
-            passedExems = tempArray;
         }
 
+        public IEnumerable GetAllControlEvents()
+        {
+            foreach (object test in passedTests)
+            {
+                yield return test;
+            }
+
+            foreach (object exem in passedExems)
+            {
+                yield return exem;
+            }
+        }
+
+        public IEnumerable GetExemsBetterThen(int markValue)
+        {
+            foreach (Exem exem in passedExems)
+            {
+                if (exem.Mark > markValue)
+                {
+                    yield return exem;
+                }
+            }
+        }
         public override string ToString()
         {
             string exemsStr = "";
@@ -141,10 +162,23 @@ namespace LAB_CSHARP
             {
                 foreach (Exem item in passedExems)
                 {
-                    exemsStr += string.Format("{0}.{1}.{2} - {3} - {4}\n", item.Date.Day, item.Date.Month, item.Date.Year, item.NameOfDiscipline, item.Mark);
+                    exemsStr += item.ToString();
                 }
             }
-            
+
+            string testsStr = "";
+            if (passedExems == null)
+            {
+                testsStr = "Ни один эказмен не был сдан!";
+            }
+            else
+            {
+                foreach (Test item in PassedExems)
+                {
+                    testsStr += item.ToString();
+                }
+            }
+
             string education = null;
 
             switch (formatOfEducation)
@@ -157,18 +191,19 @@ namespace LAB_CSHARP
             
             return string.Format(
                 "Имя: {0}\nФамилия: {1}\nДата рождения: {2}.{3}.{4}\nФорма обучения: {5}\nНомер группы: {6}\nЭказмены: \n{7}",
-                personData.Name,
-                personData.Surname,
-                personData.Birthday.Day,
-                personData.Birthday.Month,
-                personData.Birthday.Year,
+                Name,
+                Surname,
+                Date.Day,
+                Date.Month,
+                Date.Year,
                 education,
                 groupNumber,
-                exemsStr
+                exemsStr,
+                testsStr
                 );
         }
 
-        public virtual string ToShortString()
+        public override string ToShortString()
         {
 
             string education = null;
@@ -183,11 +218,11 @@ namespace LAB_CSHARP
 
             return string.Format(
                 "Имя: {0}\nФамилия: {1}\nДата рождения: {2}.{3}.{4}\nФорма обучения: {5}\nНомер группы: {6}\nСредний балл за экзамены: {7}\n",
-                personData.Name,
-                personData.Surname,
-                personData.Birthday.Day,
-                personData.Birthday.Month,
-                personData.Birthday.Year,
+                Name,
+                Surname,
+                Date.Day,
+                Date.Month,
+                Date.Year,
                 education,
                 groupNumber,
                 AverageMark
