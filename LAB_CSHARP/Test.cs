@@ -23,6 +23,11 @@ namespace LAB_CSHARP
             Status = false;
         }
 
+        public object DeepCopy()
+        {
+            return new Test(Name, Status);
+        }
+
         public override string ToString()
         {
             if (Status)

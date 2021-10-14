@@ -22,7 +22,7 @@ namespace LAB_CSHARP
         {
             name = "Artem";
             surname = "Romanov";
-            birthday = new DateTime(2002, 02, 28);
+            Date = new DateTime(2002, 02, 28);
         }
 
         public string Name
@@ -62,12 +62,12 @@ namespace LAB_CSHARP
         {
             get
             {
-                return birthday.Year;
+                return Date.Year;
             }
 
             set
             {
-                birthday = new DateTime(value, birthday.Month, birthday.Day);
+                Date = new DateTime(value, Date.Month, Date.Day);
             }
         }
 

@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace LAB_CSHARP
 {
-    class Student : Person
+    class Student : Person, IEnumerable
     {
         private Education formatOfEducation;
         private int groupNumber;
-        private ArrayList passedExems;
-        private ArrayList passedTests;
+        private ArrayList passedExems = new ArrayList();
+        private ArrayList passedTests = new ArrayList();
 
         public Student(Person personDataValue, Education formatOfEducationValue, int groupNumberValue)
         {
@@ -87,9 +87,32 @@ namespace LAB_CSHARP
             }
         }
 
+        public ArrayList PassedTests
+        {
+            get
+            {
+                return passedTests;
+            }
+            set
+            {
+                passedTests = value;
+            }
+        }
+
         public override object DeepCopy()
         {
-            return new Student(new Person(Name, Surname, Date), FormatOfEducation, GroupNumber);
+            Student newStudent = new Student(new Person(Name, Surname, Date), FormatOfEducation, GroupNumber);
+
+            foreach (Exem item in PassedExems)
+            {
+                newStudent.PassedExems.Add(item.DeepCopy());
+            }
+            foreach (Test item in passedTests)
+            {
+                newStudent.passedTests.Add(item.DeepCopy());
+            }
+
+            return newStudent;
         }
 
         public double AverageMark
@@ -128,6 +151,14 @@ namespace LAB_CSHARP
             }
         }
 
+        public void AddTests(params Test[] newTests)
+        {
+            foreach (Test ts in newTests)
+            {
+                passedTests.Add(ts);
+            }
+        }
+
         public IEnumerable GetAllControlEvents()
         {
             foreach (object test in passedTests)
@@ -151,6 +182,29 @@ namespace LAB_CSHARP
                 }
             }
         }
+
+        public IEnumerable GetPassedExems()
+        {
+            foreach (Exem exem in passedExems)
+            {
+                if (exem.Mark > 2)
+                {
+                    yield return exem;
+                }
+            }
+        }
+
+        public IEnumerable GetPassedTests()
+        {
+            foreach (Test test in passedTests)
+            {
+                if (test.Status)
+                {
+                    yield return test;
+                }
+            }
+        }
+
         public override string ToString()
         {
             string exemsStr = "";
@@ -167,13 +221,13 @@ namespace LAB_CSHARP
             }
 
             string testsStr = "";
-            if (passedExems == null)
+            if (passedTests == null)
             {
                 testsStr = "Ни один эказмен не был сдан!";
             }
             else
             {
-                foreach (Test item in PassedExems)
+                foreach (Test item in passedTests)
                 {
                     testsStr += item.ToString();
                 }
@@ -190,7 +244,7 @@ namespace LAB_CSHARP
                 
             
             return string.Format(
-                "Имя: {0}\nФамилия: {1}\nДата рождения: {2}.{3}.{4}\nФорма обучения: {5}\nНомер группы: {6}\nЭказмены: \n{7}",
+                "Имя: {0}\nФамилия: {1}\nДата рождения: {2}.{3}.{4}\nФорма обучения: {5}\nНомер группы: {6}\nЭказмены: \n{7}\nТесты: \n{8}",
                 Name,
                 Surname,
                 Date.Day,
@@ -201,6 +255,11 @@ namespace LAB_CSHARP
                 exemsStr,
                 testsStr
                 );
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return new StudentEnumerator(this); ;
         }
 
         public override string ToShortString()
