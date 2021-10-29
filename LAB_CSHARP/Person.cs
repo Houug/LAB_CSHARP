@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LAB_CSHARP
 {
-    class Person : IDateAndCopy
+    class Person : IDateAndCopy, IComparable, IComparer<Person>
     {
         protected string name;
         protected string surname;
@@ -96,7 +96,7 @@ namespace LAB_CSHARP
             if (obj == null)
                 return false;
 
-            if (this.GetType() != obj.GetType())
+            if (GetType() != obj.GetType())
                 return false;
 
             return (Person)obj == this;
@@ -104,8 +104,29 @@ namespace LAB_CSHARP
 
         public override int GetHashCode()
         {
-            return this.ToString().GetHashCode();
+            return ToString().GetHashCode();
         }
 
+        public int CompareTo(object obj)
+        {
+            return Surname.CompareTo(obj);
+        }
+
+        public int Compare(Person x, Person y)
+        {
+            if (x.Date == y.Date)
+            {
+                return 0;
+            }
+            else if (x.Date > y.Date)
+            {
+                return 1;
+            }
+            else if (x.Date < y.Date)
+            {
+                return -1;
+            }
+            else throw new Exception("Что-то пошло не так!");
+        }
     }
 }

@@ -52,6 +52,7 @@
     <Compile Include="Student.cs" />
     <Compile Include="StudentEnumerator.cs" />
     <Compile Include="Test.cs" />
+    <Compile Include="TestCollections.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
