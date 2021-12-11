@@ -44,7 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Education.cs" />
-    <Compile Include="Exem.cs" />
+    <Compile Include="Exam.cs" />
     <Compile Include="IDateAndCopy.cs" />
     <Compile Include="Person.cs" />
     <Compile Include="Program.cs" />

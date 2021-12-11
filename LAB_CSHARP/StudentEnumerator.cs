@@ -9,36 +9,36 @@ namespace LAB_CSHARP
 {
     class StudentEnumerator : IEnumerator
     {
-        private string[] array;
-        private int position = -1;
+        private string[] _array;
+        private int _position = -1;
 
         public StudentEnumerator(Student student)
         {
-            string[] temp;
-            foreach (Exem i in student.PassedExems)
+            foreach (Exam i in student.PassedExams)
             {
                 foreach (Test j in student.PassedTests)
                 {
                     if (j.Name == i.NameOfDiscipline)
                     {
-                        if (array == null)
+                        string[] temp;
+                        if (_array == null)
                         {
                             temp = new string[1];
                             temp[0] = j.Name;
                         }
                         else
                         {
-                            temp = new string[array.Length + 1];
+                            temp = new string[_array.Length + 1];
 
-                            for (int k = 0; k < array.Length; k++)
+                            for (int k = 0; k < _array.Length; k++)
                             {
-                                temp[k] = array[k];
+                                temp[k] = _array[k];
                             }
-                            temp[array.Length] = j.Name;
+                            temp[_array.Length] = j.Name;
                         }
                         
                         
-                        array = temp;
+                        _array = temp;
                     }
                     
                 }
@@ -47,13 +47,13 @@ namespace LAB_CSHARP
 
         public bool MoveNext()
         {
-            position++;
-            return (position < array.Length);
+            _position++;
+            return (_position < _array.Length);
         }
             
         public void Reset()
         {
-            position = -1;
+            _position = -1;
         }
 
         object IEnumerator.Current
@@ -70,7 +70,7 @@ namespace LAB_CSHARP
             {
                 try
                 {
-                    return array[position];
+                    return _array[_position];
                 }
                 catch (IndexOutOfRangeException)
                 {

@@ -8,33 +8,33 @@ namespace LAB_CSHARP
 {
     class Person : IDateAndCopy, IComparable, IComparer<Person>
     {
-        protected string name;
-        protected string surname;
+        private string _name;
+        private string _surname;
 
         public Person(string nameValue, string surnameValue, DateTime birthdayValue)
         {
-            name = nameValue;
-            surname = surnameValue;
+            _name = nameValue;
+            _surname = surnameValue;
             Date = birthdayValue;
         }
 
         public Person()
         {
-            name = "Artem";
-            surname = "Romanov";
-            Date = new DateTime(2002, 02, 28);
+            _name = "Artem";
+            _surname = "Romanov";
+            Date = new DateTime(new Random().Next(1900,2020), new Random().Next(1,12), new Random().Next(1,31));
         }
 
         public string Name
         {
             get
             {
-                return name;
+                return _name;
             }
 
             set
             {
-                name = value;
+                _name = value;
             }
         }
 
@@ -42,12 +42,12 @@ namespace LAB_CSHARP
         {
             get
             {
-                return surname;
+                return _surname;
             }
 
             set
             {
-                surname = value;
+                _surname = value;
             }
         }
 
@@ -73,12 +73,12 @@ namespace LAB_CSHARP
 
         public override string ToString()
         {
-            return string.Format("{0} {1} {2}.{3}.{4}", surname, name, Date.Day, Date.Month, Date.Year);
+            return $"{_surname} {_name} {Date.Day}.{Date.Month}.{Date.Year}";
         }
 
         public virtual string ToShortString()
         {
-            return string.Format("{0} {1}", surname, name);
+            return $"{_surname} {_name}";
         }
 
         public static bool operator ==(Person obj1, Person obj2)

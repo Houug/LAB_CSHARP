@@ -32,11 +32,11 @@ namespace LAB_CSHARP
         {
             if (Status)
             {
-                return string.Format("{0} - сдано\n", Name);
+                return $"{Name} - сдано\n";
             }
             else
             {
-                return string.Format("{0} - не сдано\n", Name);
+                return $"{Name} - не сдано\n";
             }
         }
     }

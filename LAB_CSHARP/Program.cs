@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 
 namespace LAB_CSHARP
 {
@@ -13,89 +14,155 @@ namespace LAB_CSHARP
         {
             // 1
             Console.WriteLine("1 ==================");
-            Person first_tester = new Person();
-            Person second_tester = new Person();
+            TestCollections testCollections;
+            Int32 size;
+            while (true)
+            {
+                try
+                {
+                    Console.WriteLine("Введите положительное число: ");
+                    size = Convert.ToInt32(Console.ReadLine());
+                    testCollections = new TestCollections(size);
+                    break;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+            }
 
-            Console.WriteLine(ReferenceEquals(first_tester, second_tester));
-            Console.WriteLine(first_tester.GetHashCode());
-            Console.WriteLine(second_tester.GetHashCode());
+            var firstElement = testCollections.DictionaryPersonStudent.First().Value;
+            var lastElement = testCollections.DictionaryPersonStudent.Last().Value;
+            var middleElement = testCollections.DictionaryPersonStudent.ElementAt(size / 2).Value;
+            var outsideElement = new Student();
 
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+            
+            Console.WriteLine("Листы");
+            Console.WriteLine("\nFirstElement");
+            stopwatch.Restart();
+            testCollections.ListPerson.Contains(firstElement.Info);
+            stopwatch.Stop();
+            Console.WriteLine(stopwatch.Elapsed);
+            stopwatch.Restart();
+            testCollections.ListString.Contains(firstElement.Info.ToString());
+            stopwatch.Stop();
+            Console.WriteLine(stopwatch.Elapsed);
+            
+            Console.WriteLine("\nLastElement");
+            stopwatch.Restart();
+            testCollections.ListPerson.Contains(lastElement.Info);
+            stopwatch.Stop();
+            Console.WriteLine(stopwatch.Elapsed);
+            stopwatch.Restart();
+            testCollections.ListString.Contains(lastElement.Info.ToString());
+            stopwatch.Stop();
+            Console.WriteLine(stopwatch.Elapsed);
+
+            Console.WriteLine("\nMiddleElement");
+            stopwatch.Restart();
+            testCollections.ListPerson.Contains(middleElement.Info);
+            stopwatch.Stop();
+            Console.WriteLine(stopwatch.Elapsed);
+            stopwatch.Restart();
+            testCollections.ListString.Contains(middleElement.Info.ToString());
+            stopwatch.Stop();
+            Console.WriteLine(stopwatch.Elapsed);
+            
+            Console.WriteLine("\nOutsideElement");
+            stopwatch.Restart();
+            testCollections.ListPerson.Contains(outsideElement.Info);
+            stopwatch.Stop();
+            Console.WriteLine(stopwatch.Elapsed);
+            stopwatch.Restart();
+            testCollections.ListString.Contains(outsideElement.Info.ToString());
+            stopwatch.Stop();
+            Console.WriteLine(stopwatch.Elapsed);
+            
+            Console.WriteLine("Словари Key");
+            Console.WriteLine("\nFirstElement");
+            stopwatch.Restart();
+            testCollections.DictionaryPersonStudent.ContainsKey(firstElement.Info);
+            stopwatch.Stop();
+            Console.WriteLine(stopwatch.Elapsed);
+            stopwatch.Restart();
+            testCollections.DictionaryStringStudent.ContainsKey(firstElement.Info.ToString());
+            stopwatch.Stop();
+            Console.WriteLine(stopwatch.Elapsed);
+            
+            Console.WriteLine("\nLastElement");
+            stopwatch.Restart();
+            testCollections.DictionaryPersonStudent.ContainsKey(lastElement.Info);
+            stopwatch.Stop();
+            Console.WriteLine(stopwatch.Elapsed);
+            stopwatch.Restart();
+            testCollections.DictionaryStringStudent.ContainsKey(lastElement.Info.ToString());
+            stopwatch.Stop();
+            Console.WriteLine(stopwatch.Elapsed);
+
+            Console.WriteLine("\nMiddleElement");
+            stopwatch.Restart();
+            testCollections.DictionaryPersonStudent.ContainsKey(middleElement.Info);
+            stopwatch.Stop();
+            Console.WriteLine(stopwatch.Elapsed);
+            stopwatch.Restart();
+            testCollections.DictionaryStringStudent.ContainsKey(middleElement.Info.ToString());
+            stopwatch.Stop();
+            Console.WriteLine(stopwatch.Elapsed);
+            
+            Console.WriteLine("\nOutsideElement");
+            stopwatch.Restart();
+            testCollections.DictionaryPersonStudent.ContainsKey(outsideElement.Info);
+            stopwatch.Stop();
+            Console.WriteLine(stopwatch.Elapsed);
+            stopwatch.Restart();
+            testCollections.DictionaryStringStudent.ContainsKey(outsideElement.Info.ToString());
+            stopwatch.Stop();
+            Console.WriteLine(stopwatch.Elapsed);
+            
+            Console.WriteLine("Словари Value");
+            Console.WriteLine("\nFirstElement");
+            stopwatch.Restart();
+            testCollections.DictionaryPersonStudent.ContainsValue(firstElement);
+            stopwatch.Stop();
+            Console.WriteLine(stopwatch.Elapsed);
+            stopwatch.Restart();
+            testCollections.DictionaryStringStudent.ContainsValue(firstElement);
+            stopwatch.Stop();
+            Console.WriteLine(stopwatch.Elapsed);
+            
+            Console.WriteLine("\nLastElement");
+            stopwatch.Restart();
+            testCollections.DictionaryPersonStudent.ContainsValue(lastElement);
+            stopwatch.Stop();
+            Console.WriteLine(stopwatch.Elapsed);
+            stopwatch.Restart();
+            testCollections.DictionaryStringStudent.ContainsValue(lastElement);
+            stopwatch.Stop();
+            Console.WriteLine(stopwatch.Elapsed);
+
+            Console.WriteLine("\nMiddleElement");
+            stopwatch.Restart();
+            testCollections.DictionaryPersonStudent.ContainsValue(middleElement);
+            stopwatch.Stop();
+            Console.WriteLine(stopwatch.Elapsed);
+            stopwatch.Restart();
+            testCollections.DictionaryStringStudent.ContainsValue(middleElement);
+            stopwatch.Stop();
+            Console.WriteLine(stopwatch.Elapsed);
+            
+            Console.WriteLine("\nOutsideElement");
+            stopwatch.Restart();
+            testCollections.DictionaryPersonStudent.ContainsValue(outsideElement);
+            stopwatch.Stop();
+            Console.WriteLine(stopwatch.Elapsed);
+            stopwatch.Restart();
+            testCollections.DictionaryStringStudent.ContainsValue(outsideElement);
+            stopwatch.Stop();
+            Console.WriteLine(stopwatch.Elapsed);
+            
             Console.WriteLine("2 ==================");
-            // 2
-            Student student = new Student();
-            Exem[] exems = new Exem[2];
-            exems[0] = new Exem("дифур", 2, new DateTime());
-            exems[1] = new Exem("матан", 4, new DateTime());
-            student.AddExems(exems);
-
-            Test[] tests = new Test[2];
-            tests[0] = new Test("дифур", false);
-            tests[1] = new Test("матан", true);
-            student.AddTests(tests);
-            Console.WriteLine(student);
-
-            // 3
-            Console.WriteLine("3 ==================");
-            Console.WriteLine(student.Info);
-
-            // 4
-            Console.WriteLine("4 ==================");
-            Student copied_student = (Student)student.DeepCopy();
-            exems = new Exem[1];
-            exems[0] = new Exem("физра", 3, new DateTime());
-            copied_student.AddExems(exems);
-            Console.WriteLine(student);
-            Console.WriteLine(copied_student);
-
-            // 5
-
-            Console.WriteLine("5 ==================");
-            try
-            {
-                student.GroupNumber = 9;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-
-            // 6
-            Console.WriteLine("6 ==================");
-            foreach (object i in student.GetAllControlEvents())
-            {
-                Console.Write(i);
-            }
-
-            // 7
-            Console.WriteLine("7 ==================");
-            foreach (object i in student.GetExemsBetterThen(3))
-            {
-                Console.Write(i);
-            }
-
-            // 8
-            Console.WriteLine("8 ==================");
-            foreach (object i in student)
-            {
-                Console.WriteLine(i);
-            }
-
-            // 9
-
-            Console.WriteLine("9 ==================");
-            foreach (object i in student.GetPassedExems())
-            {
-                Console.WriteLine(i);
-            }
-
-            // 10
-
-            Console.WriteLine("10 ==================");
-            foreach (object i in student.GetPassedTests())
-            {
-                Console.WriteLine(i);
-            }
-            Console.ReadKey();
         }
     }
 }

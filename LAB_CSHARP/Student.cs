@@ -9,18 +9,18 @@ namespace LAB_CSHARP
 {
     class Student : Person, IEnumerable
     {
-        private Education formatOfEducation;
-        private int groupNumber;
-        private ArrayList passedExems = new ArrayList();
-        private ArrayList passedTests = new ArrayList();
+        private Education _formatOfEducation;
+        private int _groupNumber;
+        private ArrayList _passedExams = new ArrayList();
+        private ArrayList _passedTests = new ArrayList();
 
         public Student(Person personDataValue, Education formatOfEducationValue, int groupNumberValue)
         {
             Name = personDataValue.Name;
             Surname = personDataValue.Surname;
             Date = personDataValue.Date;
-            formatOfEducation = formatOfEducationValue;
-            groupNumber = groupNumberValue;
+            _formatOfEducation = formatOfEducationValue;
+            _groupNumber = groupNumberValue;
         }
 
         public Student()
@@ -29,8 +29,8 @@ namespace LAB_CSHARP
             Name = temp.Name;
             Surname = temp.Surname;
             Date = temp.Date;
-            formatOfEducation = Education.Вachelor;
-            groupNumber = 10;
+            _formatOfEducation = Education.Вachelor;
+            _groupNumber = 10;
         }
 
         public Person Info
@@ -51,11 +51,11 @@ namespace LAB_CSHARP
         {
             get
             {
-                return formatOfEducation;
+                return _formatOfEducation;
             }
             set
             {
-                formatOfEducation = value;
+                _formatOfEducation = value;
             }
         }
 
@@ -63,7 +63,7 @@ namespace LAB_CSHARP
         {
             get
             {
-                return groupNumber;
+                return _groupNumber;
             }
             set
             {
@@ -71,19 +71,19 @@ namespace LAB_CSHARP
                 {
                     throw new Exception("Номер группы должен быть в интервале от 100 до 599");
                 }
-                groupNumber = value;
+                _groupNumber = value;
             }
         }
 
-        public ArrayList PassedExems
+        public ArrayList PassedExams
         {
             get
             {
-                return passedExems;
+                return _passedExams;
             }
             set
             {
-                passedExems = value;
+                _passedExams = value;
             }
         }
 
@@ -91,11 +91,11 @@ namespace LAB_CSHARP
         {
             get
             {
-                return passedTests;
+                return _passedTests;
             }
             set
             {
-                passedTests = value;
+                _passedTests = value;
             }
         }
 
@@ -103,13 +103,13 @@ namespace LAB_CSHARP
         {
             Student newStudent = new Student(new Person(Name, Surname, Date), FormatOfEducation, GroupNumber);
 
-            foreach (Exem item in PassedExems)
+            foreach (Exam item in PassedExams)
             {
-                newStudent.PassedExems.Add(item.DeepCopy());
+                newStudent.PassedExams.Add(item.DeepCopy());
             }
-            foreach (Test item in passedTests)
+            foreach (Test item in _passedTests)
             {
-                newStudent.passedTests.Add(item.DeepCopy());
+                newStudent._passedTests.Add(item.DeepCopy());
             }
 
             return newStudent;
@@ -120,17 +120,17 @@ namespace LAB_CSHARP
             get
             {
                 double result = 0;
-                if (passedExems == null)
+                if (_passedExams == null)
                 {
                     return result;
                 }
                 else
                 {
-                    foreach (Exem item in passedExems)
+                    foreach (Exam item in _passedExams)
                     {
                         result += item.Mark;
                     }
-                    return result / passedExems.Count;
+                    return result / _passedExams.Count;
                 }
             }
         }
@@ -139,15 +139,15 @@ namespace LAB_CSHARP
         {
             get
             {
-                return value == formatOfEducation;
+                return value == _formatOfEducation;
             }
         }
 
-        public void AddExems(params Exem[] newExems)
+        public void AddExams(params Exam[] newExams)
         {
-            foreach (Exem ex in newExems)
+            foreach (Exam ex in newExams)
             {
-                passedExems.Add(ex);
+                _passedExams.Add(ex);
             }
         }
 
@@ -155,48 +155,48 @@ namespace LAB_CSHARP
         {
             foreach (Test ts in newTests)
             {
-                passedTests.Add(ts);
+                _passedTests.Add(ts);
             }
         }
 
         public IEnumerable GetAllControlEvents()
         {
-            foreach (object test in passedTests)
+            foreach (object test in _passedTests)
             {
                 yield return test;
             }
 
-            foreach (object exem in passedExems)
+            foreach (object exam in _passedExams)
             {
-                yield return exem;
+                yield return exam;
             }
         }
 
-        public IEnumerable GetExemsBetterThen(int markValue)
+        public IEnumerable GetExamsWhatBetterThen(int markValue)
         {
-            foreach (Exem exem in passedExems)
+            foreach (Exam exam in _passedExams)
             {
-                if (exem.Mark > markValue)
+                if (exam.Mark > markValue)
                 {
-                    yield return exem;
+                    yield return exam;
                 }
             }
         }
 
-        public IEnumerable GetPassedExems()
+        public IEnumerable GetPassedExams()
         {
-            foreach (Exem exem in passedExems)
+            foreach (Exam exam in _passedExams)
             {
-                if (exem.Mark > 2)
+                if (exam.Mark > 2)
                 {
-                    yield return exem;
+                    yield return exam;
                 }
             }
         }
 
         public IEnumerable GetPassedTests()
         {
-            foreach (Test test in passedTests)
+            foreach (Test test in _passedTests)
             {
                 if (test.Status)
                 {
@@ -207,27 +207,27 @@ namespace LAB_CSHARP
 
         public override string ToString()
         {
-            string exemsStr = "";
-            if (passedExems == null)
+            string examsStr = "";
+            if (_passedExams == null)
             {
-                exemsStr = "Ни один эказмен не был сдан!";
+                examsStr = "Ни один эказмен не был сдан!";
             }
             else
             {
-                foreach (Exem item in passedExems)
+                foreach (Exam item in _passedExams)
                 {
-                    exemsStr += item.ToString();
+                    examsStr += item.ToString();
                 }
             }
 
             string testsStr = "";
-            if (passedTests == null)
+            if (_passedTests == null)
             {
                 testsStr = "Ни один эказмен не был сдан!";
             }
             else
             {
-                foreach (Test item in passedTests)
+                foreach (Test item in _passedTests)
                 {
                     testsStr += item.ToString();
                 }
@@ -235,7 +235,7 @@ namespace LAB_CSHARP
 
             string education = null;
 
-            switch (formatOfEducation)
+            switch (_formatOfEducation)
             {
                 case Education.Вachelor: education = "Бакалавриат"; break;
                 case Education.Specialist: education = "Специалитет"; break;
@@ -243,18 +243,8 @@ namespace LAB_CSHARP
             }
                 
             
-            return string.Format(
-                "Имя: {0}\nФамилия: {1}\nДата рождения: {2}.{3}.{4}\nФорма обучения: {5}\nНомер группы: {6}\nЭказмены: \n{7}\nТесты: \n{8}",
-                Name,
-                Surname,
-                Date.Day,
-                Date.Month,
-                Date.Year,
-                education,
-                groupNumber,
-                exemsStr,
-                testsStr
-                );
+            return
+                $"Имя: {Name}\nФамилия: {Surname}\nДата рождения: {Date.Day}.{Date.Month}.{Date.Year}\nФорма обучения: {education}\nНомер группы: {_groupNumber}\nЭказмены: \n{examsStr}\nТесты: \n{testsStr}";
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -267,7 +257,7 @@ namespace LAB_CSHARP
 
             string education = null;
 
-            switch (formatOfEducation)
+            switch (_formatOfEducation)
             {
                 case Education.Вachelor: education = "Бакалавриат"; break;
                 case Education.Specialist: education = "Специалитет"; break;
@@ -275,17 +265,8 @@ namespace LAB_CSHARP
             }
 
 
-            return string.Format(
-                "Имя: {0}\nФамилия: {1}\nДата рождения: {2}.{3}.{4}\nФорма обучения: {5}\nНомер группы: {6}\nСредний балл за экзамены: {7}\n",
-                Name,
-                Surname,
-                Date.Day,
-                Date.Month,
-                Date.Year,
-                education,
-                groupNumber,
-                AverageMark
-                );
+            return
+                $"Имя: {Name}\nФамилия: {Surname}\nДата рождения: {Date.Day}.{Date.Month}.{Date.Year}\nФорма обучения: {education}\nНомер группы: {_groupNumber}\nСредний балл за экзамены: {AverageMark}\n";
         }
     }
 }
