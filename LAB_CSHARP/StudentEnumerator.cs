@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LAB_CSHARP
 {
-    class StudentEnumerator : IEnumerator
+    public class StudentEnumerator : IEnumerator
     {
         private string[] _array;
         private int _position = -1;

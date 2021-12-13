@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LAB_CSHARP
 {
-    class Person : IDateAndCopy, IComparable, IComparer<Person>
+    public class Person : IDateAndCopy, IComparable, IComparer<Person>
     {
         private string _name;
         private string _surname;
@@ -118,15 +115,18 @@ namespace LAB_CSHARP
             {
                 return 0;
             }
-            else if (x.Date > y.Date)
+
+            if (x.Date > y.Date)
             {
                 return 1;
             }
-            else if (x.Date < y.Date)
+
+            if (x.Date < y.Date)
             {
                 return -1;
             }
-            else throw new Exception("Что-то пошло не так!");
+
+            throw new Exception("Что-то пошло не так!");
         }
     }
 }

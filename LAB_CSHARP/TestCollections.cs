@@ -7,14 +7,13 @@ using System.Threading.Tasks;
 
 namespace LAB_CSHARP
 {
-    class TestCollections
+    public class TestCollections
     {
         private List<Person> _personList;
         private List<string> _stringList;
         private Dictionary<Person, Student> _dictPersonStudent;
         private Dictionary<string, Student> _dictStringStudent;
-
-        [SuppressMessage("ReSharper.DPA", "DPA0001: Memory allocation issues")]
+        
         public TestCollections(int size)
         {
             if (size <= 0)

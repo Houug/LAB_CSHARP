@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LAB_CSHARP
 {
-    class Test
+    public class Test
     {
         public string Name { get; set; }
         public bool Status { get; set; }

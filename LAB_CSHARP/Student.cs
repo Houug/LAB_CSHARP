@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace LAB_CSHARP
 {
-    class Student : Person, IEnumerable
+    public class Student : Person, IEnumerable
     {
         private Education _formatOfEducation;
         private int _groupNumber;
-        private ArrayList _passedExams = new ArrayList();
-        private ArrayList _passedTests = new ArrayList();
+        private List<Exam> _passedExams = new List<Exam>();
+        private List<Test> _passedTests = new List<Test>();
 
         public Student(Person personDataValue, Education formatOfEducationValue, int groupNumberValue)
         {
@@ -75,7 +75,7 @@ namespace LAB_CSHARP
             }
         }
 
-        public ArrayList PassedExams
+        public List<Exam> PassedExams
         {
             get
             {
@@ -87,7 +87,7 @@ namespace LAB_CSHARP
             }
         }
 
-        public ArrayList PassedTests
+        public List<Test> PassedTests
         {
             get
             {
@@ -105,11 +105,11 @@ namespace LAB_CSHARP
 
             foreach (Exam item in PassedExams)
             {
-                newStudent.PassedExams.Add(item.DeepCopy());
+                newStudent.PassedExams.Add((Exam) item.DeepCopy());
             }
             foreach (Test item in _passedTests)
             {
-                newStudent._passedTests.Add(item.DeepCopy());
+                newStudent._passedTests.Add((Test) item.DeepCopy());
             }
 
             return newStudent;
@@ -204,6 +204,8 @@ namespace LAB_CSHARP
                 }
             }
         }
+        
+        
 
         public override string ToString()
         {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LAB_CSHARP
 {
-    class Exam : IDateAndCopy
+    public class Exam : IDateAndCopy
     {
         public string NameOfDiscipline { get; set; }
         public int Mark { get; set; }

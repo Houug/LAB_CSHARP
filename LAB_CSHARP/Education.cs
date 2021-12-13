@@ -1,6 +1,6 @@
 ﻿namespace LAB_CSHARP
 {
-    enum Education
+    public enum Education
     {
         Specialist,
         Вachelor,
