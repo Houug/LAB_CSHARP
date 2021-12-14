@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LAB_CSHARP
 {
-    public class Student : Person, IEnumerable
+    public class Student : Person, IEnumerable, IComparer<Student>
     {
         private Education _formatOfEducation;
         private int _groupNumber;
@@ -269,6 +269,11 @@ namespace LAB_CSHARP
 
             return
                 $"Имя: {Name}\nФамилия: {Surname}\nДата рождения: {Date.Day}.{Date.Month}.{Date.Year}\nФорма обучения: {education}\nНомер группы: {_groupNumber}\nСредний балл за экзамены: {AverageMark}\n";
+        }
+
+        public int Compare(Student x, Student y)
+        {
+            return x.Info.Surname.CompareTo(y.Info.Surname);
         }
     }
 }

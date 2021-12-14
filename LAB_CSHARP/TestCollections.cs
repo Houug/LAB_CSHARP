@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
@@ -70,6 +71,135 @@ namespace LAB_CSHARP
         public Dictionary<string, Student> DictionaryStringStudent
         {
             get { return _dictStringStudent; }
+        }
+
+        public void StopwatchTime(Student firstElement,Student lastElement,Student middleElement,Student outsideElement)
+        {
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+            
+            Console.WriteLine("Листы");
+            Console.WriteLine("\nFirstElement");
+            stopwatch.Restart();
+            ListPerson.Contains(firstElement.Info);
+            stopwatch.Stop();
+            Console.WriteLine(stopwatch.Elapsed);
+            stopwatch.Restart();
+            ListString.Contains(firstElement.Info.ToString());
+            stopwatch.Stop();
+            Console.WriteLine(stopwatch.Elapsed);
+            
+            Console.WriteLine("\nLastElement");
+            stopwatch.Restart();
+            ListPerson.Contains(lastElement.Info);
+            stopwatch.Stop();
+            Console.WriteLine(stopwatch.Elapsed);
+            stopwatch.Restart();
+            ListString.Contains(lastElement.Info.ToString());
+            stopwatch.Stop();
+            Console.WriteLine(stopwatch.Elapsed);
+
+            Console.WriteLine("\nMiddleElement");
+            stopwatch.Restart();
+            ListPerson.Contains(middleElement.Info);
+            stopwatch.Stop();
+            Console.WriteLine(stopwatch.Elapsed);
+            stopwatch.Restart();
+            ListString.Contains(middleElement.Info.ToString());
+            stopwatch.Stop();
+            Console.WriteLine(stopwatch.Elapsed);
+            
+            Console.WriteLine("\nOutsideElement");
+            stopwatch.Restart();
+            ListPerson.Contains(outsideElement.Info);
+            stopwatch.Stop();
+            Console.WriteLine(stopwatch.Elapsed);
+            stopwatch.Restart();
+            ListString.Contains(outsideElement.Info.ToString());
+            stopwatch.Stop();
+            Console.WriteLine(stopwatch.Elapsed);
+            
+            Console.WriteLine("Словари Key");
+            Console.WriteLine("\nFirstElement");
+            stopwatch.Restart();
+            DictionaryPersonStudent.ContainsKey(firstElement.Info);
+            stopwatch.Stop();
+            Console.WriteLine(stopwatch.Elapsed);
+            stopwatch.Restart();
+            DictionaryStringStudent.ContainsKey(firstElement.Info.ToString());
+            stopwatch.Stop();
+            Console.WriteLine(stopwatch.Elapsed);
+            
+            Console.WriteLine("\nLastElement");
+            stopwatch.Restart();
+            DictionaryPersonStudent.ContainsKey(lastElement.Info);
+            stopwatch.Stop();
+            Console.WriteLine(stopwatch.Elapsed);
+            stopwatch.Restart();
+            DictionaryStringStudent.ContainsKey(lastElement.Info.ToString());
+            stopwatch.Stop();
+            Console.WriteLine(stopwatch.Elapsed);
+
+            Console.WriteLine("\nMiddleElement");
+            stopwatch.Restart();
+            DictionaryPersonStudent.ContainsKey(middleElement.Info);
+            stopwatch.Stop();
+            Console.WriteLine(stopwatch.Elapsed);
+            stopwatch.Restart();
+            DictionaryStringStudent.ContainsKey(middleElement.Info.ToString());
+            stopwatch.Stop();
+            Console.WriteLine(stopwatch.Elapsed);
+            
+            Console.WriteLine("\nOutsideElement");
+            stopwatch.Restart();
+            DictionaryPersonStudent.ContainsKey(outsideElement.Info);
+            stopwatch.Stop();
+            Console.WriteLine(stopwatch.Elapsed);
+            stopwatch.Restart();
+            DictionaryStringStudent.ContainsKey(outsideElement.Info.ToString());
+            stopwatch.Stop();
+            Console.WriteLine(stopwatch.Elapsed);
+            
+            Console.WriteLine("Словари Value");
+            Console.WriteLine("\nFirstElement");
+            stopwatch.Restart();
+            DictionaryPersonStudent.ContainsValue(firstElement);
+            stopwatch.Stop();
+            Console.WriteLine(stopwatch.Elapsed);
+            stopwatch.Restart();
+            DictionaryStringStudent.ContainsValue(firstElement);
+            stopwatch.Stop();
+            Console.WriteLine(stopwatch.Elapsed);
+            
+            Console.WriteLine("\nLastElement");
+            stopwatch.Restart();
+            DictionaryPersonStudent.ContainsValue(lastElement);
+            stopwatch.Stop();
+            Console.WriteLine(stopwatch.Elapsed);
+            stopwatch.Restart();
+            DictionaryStringStudent.ContainsValue(lastElement);
+            stopwatch.Stop();
+            Console.WriteLine(stopwatch.Elapsed);
+
+            Console.WriteLine("\nMiddleElement");
+            stopwatch.Restart();
+            DictionaryPersonStudent.ContainsValue(middleElement);
+            stopwatch.Stop();
+            Console.WriteLine(stopwatch.Elapsed);
+            stopwatch.Restart();
+            DictionaryStringStudent.ContainsValue(middleElement);
+            stopwatch.Stop();
+            Console.WriteLine(stopwatch.Elapsed);
+            
+            Console.WriteLine("\nOutsideElement");
+            stopwatch.Restart();
+            DictionaryPersonStudent.ContainsValue(outsideElement);
+            stopwatch.Stop();
+            Console.WriteLine(stopwatch.Elapsed);
+            stopwatch.Restart();
+            DictionaryStringStudent.ContainsValue(outsideElement);
+            stopwatch.Stop();
+            Console.WriteLine(stopwatch.Elapsed);
         }
     }
 }

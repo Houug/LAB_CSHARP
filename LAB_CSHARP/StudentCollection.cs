@@ -51,7 +51,7 @@ namespace LAB_CSHARP
 
         public void SortBySurname()
         {
-            _listStudent.Sort();
+            _listStudent.Sort(new Student());
         }
 
         public void SortByBirthdayDate()
@@ -61,7 +61,14 @@ namespace LAB_CSHARP
 
         public void SortByAveragePoints()
         {
-            _listStudent.Sort(new StudentComparer());
+            try
+            {
+                _listStudent.Sort(new StudentComparer());
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
         
         
