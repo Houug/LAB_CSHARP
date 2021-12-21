@@ -35,10 +35,7 @@ namespace LAB_CSHARP
 
         public Person Info
         {
-            get
-            {
-                return new Person(Name, Surname, Date);
-            }
+            get { return new Person(Name, Surname, Date); }
             set
             {
                 Name = value.Name;
@@ -49,54 +46,34 @@ namespace LAB_CSHARP
 
         public Education FormatOfEducation
         {
-            get
-            {
-                return _formatOfEducation;
-            }
-            set
-            {
-                _formatOfEducation = value;
-            }
+            get { return _formatOfEducation; }
+            set { _formatOfEducation = value; }
         }
 
         public int GroupNumber
         {
-            get
-            {
-                return _groupNumber;
-            }
+            get { return _groupNumber; }
             set
             {
                 if (value <= 100 | value > 599)
                 {
                     throw new Exception("Номер группы должен быть в интервале от 100 до 599");
                 }
+
                 _groupNumber = value;
             }
         }
 
         public List<Exam> PassedExams
         {
-            get
-            {
-                return _passedExams;
-            }
-            set
-            {
-                _passedExams = value;
-            }
+            get { return _passedExams; }
+            set { _passedExams = value; }
         }
 
         public List<Test> PassedTests
         {
-            get
-            {
-                return _passedTests;
-            }
-            set
-            {
-                _passedTests = value;
-            }
+            get { return _passedTests; }
+            set { _passedTests = value; }
         }
 
         public override object DeepCopy()
@@ -107,6 +84,7 @@ namespace LAB_CSHARP
             {
                 newStudent.PassedExams.Add((Exam) item.DeepCopy());
             }
+
             foreach (Test item in _passedTests)
             {
                 newStudent._passedTests.Add((Test) item.DeepCopy());
@@ -130,6 +108,7 @@ namespace LAB_CSHARP
                     {
                         result += item.Mark;
                     }
+
                     return result / _passedExams.Count;
                 }
             }
@@ -137,10 +116,7 @@ namespace LAB_CSHARP
 
         public bool this[Education value]
         {
-            get
-            {
-                return value == _formatOfEducation;
-            }
+            get { return value == _formatOfEducation; }
         }
 
         public void AddExams(params Exam[] newExams)
@@ -204,8 +180,7 @@ namespace LAB_CSHARP
                 }
             }
         }
-        
-        
+
 
         public override string ToString()
         {
@@ -239,31 +214,43 @@ namespace LAB_CSHARP
 
             switch (_formatOfEducation)
             {
-                case Education.Вachelor: education = "Бакалавриат"; break;
-                case Education.Specialist: education = "Специалитет"; break;
-                case Education.SecondEducation: education = "Второе высшее"; break;
+                case Education.Вachelor:
+                    education = "Бакалавриат";
+                    break;
+                case Education.Specialist:
+                    education = "Специалитет";
+                    break;
+                case Education.SecondEducation:
+                    education = "Второе высшее";
+                    break;
             }
-                
-            
+
+
             return
                 $"Имя: {Name}\nФамилия: {Surname}\nДата рождения: {Date.Day}.{Date.Month}.{Date.Year}\nФорма обучения: {education}\nНомер группы: {_groupNumber}\nЭказмены: \n{examsStr}\nТесты: \n{testsStr}";
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return new StudentEnumerator(this); ;
+            return new StudentEnumerator(this);
+            ;
         }
 
         public override string ToShortString()
         {
-
             string education = null;
 
             switch (_formatOfEducation)
             {
-                case Education.Вachelor: education = "Бакалавриат"; break;
-                case Education.Specialist: education = "Специалитет"; break;
-                case Education.SecondEducation: education = "Второе высшее"; break;
+                case Education.Вachelor:
+                    education = "Бакалавриат";
+                    break;
+                case Education.Specialist:
+                    education = "Специалитет";
+                    break;
+                case Education.SecondEducation:
+                    education = "Второе высшее";
+                    break;
             }
 
 
@@ -274,6 +261,21 @@ namespace LAB_CSHARP
         public int Compare(Student x, Student y)
         {
             return x.Info.Surname.CompareTo(y.Info.Surname);
+        }
+
+        public void SortByNameOfDiscipline()
+        {
+            _passedExams.Sort((x, y) => x.NameOfDiscipline.CompareTo(y.NameOfDiscipline));
+        }
+
+        public void SortByMark()
+        {
+            _passedExams.Sort((x, y) => x.Mark.CompareTo(y.Mark));
+        }
+
+        public void SortByDate()
+        {
+            _passedExams.Sort((x, y) => x.Date.CompareTo(y.Date));
         }
     }
 }

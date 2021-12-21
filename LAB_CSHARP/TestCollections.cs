@@ -1,205 +1,71 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LAB_CSHARP
 {
-    public class TestCollections
+    public delegate KeyValuePair<TKey,TValue> GenerateElement<TKey, TValue>(int j);
+    public class TestCollections<TKey,TValue>
     {
-        private List<Person> _personList;
+        private List<TKey> _keyList;
         private List<string> _stringList;
-        private Dictionary<Person, Student> _dictPersonStudent;
-        private Dictionary<string, Student> _dictStringStudent;
+        private Dictionary<TKey, TValue> _keyDict;
+        private Dictionary<string, TValue> _stringDict;
+        private GenerateElement<TKey, TValue> _generateElement;
         
-        public TestCollections(int size)
+        public TestCollections(int count, GenerateElement<TKey, TValue> j)
         {
-            if (size <= 0)
-            {
-                throw new Exception("Число должно быть положительным");
-            }
+            if (count <= 0) throw new ArgumentException();
 
-            _personList = new List<Person>(size);
-            _dictPersonStudent = new Dictionary<Person, Student>(size);
-            _stringList = new List<string>(size);
-            _dictStringStudent = new Dictionary<string, Student>(size);
-
-            for (int i = 0; i < size; i++)
+            _generateElement = j;
+            for (int i = 0; i < count; i++)
             {
-                while (true)
-                {
-                    try
-                    {
-                        var student = GenerateStudent(new Random().Next(100, 598));
-                        _personList.Add(student.Info);
-                        _dictPersonStudent.Add(student.Info, student);
-                        _stringList.Add(student.Info.ToString());
-                        _dictStringStudent.Add(student.Info.ToString(), student);
-                        break;
-                    }
-                    catch (Exception e)
-                    {
-                        // ignored
-                    }
-                }
+                var element = _generateElement(i);
+                _keyDict.Add(element.Key, element.Value);
+                _stringDict.Add(element.Key.ToString(), element.Value);
+                _keyList.Add(element.Key);
+                _stringList.Add(element.Key.ToString());
             }
         }
-
-        private static Student GenerateStudent(int value)
+        
+        public void StopwatchKeyList()
         {
-            return new Student(new Person(), Education.Вachelor, value);
+            var firstElement = _keyList[0];
+            var middleElement = _keyList[_keyList.Count / 2];
+            var lastElement = _keyList[-1];
+            var outsideElement = _generateElement(_keyList.Count + 10).Key;
+
+
+            _keyList.Contains(firstElement);
+            _keyList.Contains(middleElement);
+            _keyList.Contains(lastElement);
+            _keyList.Contains(outsideElement);
         }
-
-        public List<Person> ListPerson
+        
+        public void StopwatchKeyDictByKey()
         {
-            get { return _personList; }
+            var firstElement = _keyDict.ElementAt(0).Key;
+            var middleElement = _keyDict.ElementAt(_keyDict.Count / 2).Key;
+            var lastElement = _keyDict.ElementAt(_keyDict.Count - 1).Key;
+            var outsideElement = _generateElement(_keyDict.Count + 10).Key;
+
+            _keyDict.ContainsKey(firstElement);
+            _keyDict.ContainsKey(middleElement);
+            _keyDict.ContainsKey(lastElement);
+            _keyDict.ContainsKey(outsideElement);
         }
-
-        public List<string> ListString
+        
+        public void StopwatchKeyDictByValue()
         {
-            get { return _stringList; }
-        }
+            var firstElement = _keyDict.ElementAt(0).Value;
+            var middleElement = _keyDict.ElementAt(_keyDict.Count / 2).Value;
+            var lastElement = _keyDict.ElementAt(_keyDict.Count - 1).Value;
+            var outsideElement = _generateElement(_keyDict.Count + 10).Value;
 
-        public Dictionary<Person, Student> DictionaryPersonStudent
-        {
-            get { return _dictPersonStudent; }
-        }
-
-        public Dictionary<string, Student> DictionaryStringStudent
-        {
-            get { return _dictStringStudent; }
-        }
-
-        public void StopwatchTime(Student firstElement,Student lastElement,Student middleElement,Student outsideElement)
-        {
-            Stopwatch stopwatch = new Stopwatch();
-            stopwatch.Start();
-            
-            Console.WriteLine("Листы");
-            Console.WriteLine("\nFirstElement");
-            stopwatch.Restart();
-            ListPerson.Contains(firstElement.Info);
-            stopwatch.Stop();
-            Console.WriteLine(stopwatch.Elapsed);
-            stopwatch.Restart();
-            ListString.Contains(firstElement.Info.ToString());
-            stopwatch.Stop();
-            Console.WriteLine(stopwatch.Elapsed);
-            
-            Console.WriteLine("\nLastElement");
-            stopwatch.Restart();
-            ListPerson.Contains(lastElement.Info);
-            stopwatch.Stop();
-            Console.WriteLine(stopwatch.Elapsed);
-            stopwatch.Restart();
-            ListString.Contains(lastElement.Info.ToString());
-            stopwatch.Stop();
-            Console.WriteLine(stopwatch.Elapsed);
-
-            Console.WriteLine("\nMiddleElement");
-            stopwatch.Restart();
-            ListPerson.Contains(middleElement.Info);
-            stopwatch.Stop();
-            Console.WriteLine(stopwatch.Elapsed);
-            stopwatch.Restart();
-            ListString.Contains(middleElement.Info.ToString());
-            stopwatch.Stop();
-            Console.WriteLine(stopwatch.Elapsed);
-            
-            Console.WriteLine("\nOutsideElement");
-            stopwatch.Restart();
-            ListPerson.Contains(outsideElement.Info);
-            stopwatch.Stop();
-            Console.WriteLine(stopwatch.Elapsed);
-            stopwatch.Restart();
-            ListString.Contains(outsideElement.Info.ToString());
-            stopwatch.Stop();
-            Console.WriteLine(stopwatch.Elapsed);
-            
-            Console.WriteLine("Словари Key");
-            Console.WriteLine("\nFirstElement");
-            stopwatch.Restart();
-            DictionaryPersonStudent.ContainsKey(firstElement.Info);
-            stopwatch.Stop();
-            Console.WriteLine(stopwatch.Elapsed);
-            stopwatch.Restart();
-            DictionaryStringStudent.ContainsKey(firstElement.Info.ToString());
-            stopwatch.Stop();
-            Console.WriteLine(stopwatch.Elapsed);
-            
-            Console.WriteLine("\nLastElement");
-            stopwatch.Restart();
-            DictionaryPersonStudent.ContainsKey(lastElement.Info);
-            stopwatch.Stop();
-            Console.WriteLine(stopwatch.Elapsed);
-            stopwatch.Restart();
-            DictionaryStringStudent.ContainsKey(lastElement.Info.ToString());
-            stopwatch.Stop();
-            Console.WriteLine(stopwatch.Elapsed);
-
-            Console.WriteLine("\nMiddleElement");
-            stopwatch.Restart();
-            DictionaryPersonStudent.ContainsKey(middleElement.Info);
-            stopwatch.Stop();
-            Console.WriteLine(stopwatch.Elapsed);
-            stopwatch.Restart();
-            DictionaryStringStudent.ContainsKey(middleElement.Info.ToString());
-            stopwatch.Stop();
-            Console.WriteLine(stopwatch.Elapsed);
-            
-            Console.WriteLine("\nOutsideElement");
-            stopwatch.Restart();
-            DictionaryPersonStudent.ContainsKey(outsideElement.Info);
-            stopwatch.Stop();
-            Console.WriteLine(stopwatch.Elapsed);
-            stopwatch.Restart();
-            DictionaryStringStudent.ContainsKey(outsideElement.Info.ToString());
-            stopwatch.Stop();
-            Console.WriteLine(stopwatch.Elapsed);
-            
-            Console.WriteLine("Словари Value");
-            Console.WriteLine("\nFirstElement");
-            stopwatch.Restart();
-            DictionaryPersonStudent.ContainsValue(firstElement);
-            stopwatch.Stop();
-            Console.WriteLine(stopwatch.Elapsed);
-            stopwatch.Restart();
-            DictionaryStringStudent.ContainsValue(firstElement);
-            stopwatch.Stop();
-            Console.WriteLine(stopwatch.Elapsed);
-            
-            Console.WriteLine("\nLastElement");
-            stopwatch.Restart();
-            DictionaryPersonStudent.ContainsValue(lastElement);
-            stopwatch.Stop();
-            Console.WriteLine(stopwatch.Elapsed);
-            stopwatch.Restart();
-            DictionaryStringStudent.ContainsValue(lastElement);
-            stopwatch.Stop();
-            Console.WriteLine(stopwatch.Elapsed);
-
-            Console.WriteLine("\nMiddleElement");
-            stopwatch.Restart();
-            DictionaryPersonStudent.ContainsValue(middleElement);
-            stopwatch.Stop();
-            Console.WriteLine(stopwatch.Elapsed);
-            stopwatch.Restart();
-            DictionaryStringStudent.ContainsValue(middleElement);
-            stopwatch.Stop();
-            Console.WriteLine(stopwatch.Elapsed);
-            
-            Console.WriteLine("\nOutsideElement");
-            stopwatch.Restart();
-            DictionaryPersonStudent.ContainsValue(outsideElement);
-            stopwatch.Stop();
-            Console.WriteLine(stopwatch.Elapsed);
-            stopwatch.Restart();
-            DictionaryStringStudent.ContainsValue(outsideElement);
-            stopwatch.Stop();
-            Console.WriteLine(stopwatch.Elapsed);
+            _keyDict.ContainsValue(firstElement);
+            _keyDict.ContainsValue(middleElement);
+            _keyDict.ContainsValue(lastElement);
+            _keyDict.ContainsValue(outsideElement);
         }
     }
 }

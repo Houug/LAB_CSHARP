@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LAB_CSHARP
 {
-    public class Exam : IDateAndCopy
+    public class Exam : IDateAndCopy, IComparable , IComparer<Exam>
     {
         public string NameOfDiscipline { get; set; }
         public int Mark { get; set; }
@@ -30,9 +30,21 @@ namespace LAB_CSHARP
             return new Exam(NameOfDiscipline, Mark, Date);
         }
 
+        public int Compare(Exam x, Exam y)
+        {
+            return x.Mark.CompareTo(y.Mark);
+        }
+
         public override string ToString()
         {
             return $"Название: {NameOfDiscipline}, Оценка: {Mark}, Дата: {Date.Day}.{Date.Month}.{Date.Year}\n";
+        }
+
+        public int CompareTo(object obj)
+        {
+            if (obj == null) return 1;
+            Exam ex = (Exam) obj ;
+            return NameOfDiscipline.CompareTo(ex.NameOfDiscipline);
         }
     }
 }
