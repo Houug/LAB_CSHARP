@@ -5,9 +5,12 @@ using System.Linq;
 
 namespace LAB_CSHARP
 {
+    public delegate void StudentListHandler(object source, StudentListHandlerEventArgs args);
     public class StudentCollection
     {
         private List<Student> _listStudent = new List<Student>();
+        public event StudentListHandler StudentsCountChanged;
+        public event StudentListHandler StudentReferenceChanged;
 
         public void AddDefaults(int count)
         {
@@ -16,6 +19,8 @@ namespace LAB_CSHARP
             for (int i = 0; i < count; i++)
             {
                 _listStudent.Add(new Student());
+                var size = _listStudent.Count;
+                StudentsCountChanged(this, new StudentListHandlerEventArgs("List", "Student", _listStudent.ElementAt(size-1)));
             }
         }
 
@@ -24,6 +29,8 @@ namespace LAB_CSHARP
             foreach (var student in students)
             {
                 _listStudent.Add(student);
+                var size = _listStudent.Count;
+                StudentsCountChanged(this, new StudentListHandlerEventArgs("List", "Student", _listStudent.ElementAt(size-1)));
             }
         }
 
@@ -99,5 +106,40 @@ namespace LAB_CSHARP
         {
             return _listStudent.Where(x => x.AverageMark == value).ToList();
         }
+
+        public string CollectionName { get; set; }
+        public bool Remove(int j)
+        {
+            try
+            {
+                Student removedObject = _listStudent[j];
+                _listStudent.RemoveAt(j);
+                StudentsCountChanged(this, new StudentListHandlerEventArgs("List", "Student", removedObject));
+                return true;
+            }catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+
+        }
+        public Student this[int index]
+        {
+            get { return _listStudent[index]; }
+            set
+            {
+                try
+                {
+                    _listStudent[index] = value;
+                    StudentReferenceChanged(this, new StudentListHandlerEventArgs("List", "Student", _listStudent[index]));
+                }catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+            }
+        }
+
+        
+
     }
 }

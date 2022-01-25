@@ -12,35 +12,12 @@ namespace LAB_CSHARP
     {
         static void Main(string[] args)
         {
-            // 1
-            Console.WriteLine("1 ==================");
-            TestCollections testCollections;
-            Int32 size;
-            while (true)
-            {
-                try
-                {
-                    Console.WriteLine("Введите положительное число: ");
-                    size = Convert.ToInt32(Console.ReadLine());
-                    testCollections = new TestCollections(size);
-                    break;
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                }
-            }
 
-            var firstElement = testCollections.DictionaryPersonStudent.First().Value;
-            var lastElement = testCollections.DictionaryPersonStudent.Last().Value;
-            var middleElement = testCollections.DictionaryPersonStudent.ElementAt(size / 2).Value;
-            var outsideElement = new Student();
 
-            testCollections.StopwatchTime(firstElement,lastElement,middleElement,outsideElement);
-            
-            Console.WriteLine("2 ==================");
-
-            StudentCollection studentCollection = new StudentCollection();
+            StudentCollection col1 = new StudentCollection();
+            StudentCollection col2 = new StudentCollection();
+            Journal j1 = new Journal(col1);
+            Journal j2 = new Journal(col2);
             Student[] students =
             {
                 new Student(new Person("Vova", "Popov", new DateTime()), Education.Specialist, 201),
@@ -50,28 +27,16 @@ namespace LAB_CSHARP
                 new Student(new Person("Dora", "True", new DateTime()), Education.Specialist, 103),
                 new Student(new Person("Artem", "Popov", new DateTime()), Education.Specialist, 201)
             };
-            studentCollection.AddStudents(students);
-            Console.WriteLine(studentCollection.ToShortString());
-            studentCollection.SortBySurname();
-            Console.WriteLine(studentCollection.ToShortString());
-            studentCollection.SortByBirthdayDate();
-            Console.WriteLine(studentCollection.ToShortString());
-            studentCollection.SortByAveragePoints();
-            Console.WriteLine(studentCollection.ToShortString());
-            
-            Console.WriteLine("3 ==================");
-            Console.WriteLine(studentCollection.MaxAveragePoints);
-            foreach (Student s in studentCollection.OnlySpecialist)
-            {
-                Console.WriteLine(s.ToShortString());
-            }
-            
-            
-            foreach (Student s in studentCollection.AverageMarkGroup(10))
-            {
-                Console.WriteLine(s.ToShortString());
-            }
+            col1.AddStudents(students);
+            col2.AddStudents(students);
 
+            col1.Remove(1);
+            col2.AddDefaults(3);
+            col2[1] = new Student();
+
+            Console.WriteLine(j1.ToString());
+            Console.WriteLine(j2.ToString());
+            Console.ReadKey();
 
         }
     }
