@@ -5,8 +5,9 @@ using System.Linq;
 
 namespace LAB_CSHARP
 {
-    delegate TKey KeySelector<TKey>(Student st);
-    class StudentCollection<TKey> : IComparer<Student>
+    public delegate TKey KeySelector<TKey>(Student st);
+
+    public class StudentCollection<TKey> : IComparer<Student>
     {
         private Dictionary<TKey, Student> _dictStudent;
         private KeySelector<TKey> _selector;
@@ -80,6 +81,21 @@ namespace LAB_CSHARP
             {
                 return _dictStudent.GroupBy(kv => kv.Value.FormatOfEducation);
             }
+        }
+        public StudentsChangedHandler<TKey> StudentsChanged;
+        private void StudentPropertyChanged(Action action, string name, TKey key)
+        {
+            StudentsChanged?.Invoke(this, new StudentsChangedEventArgs<TKey>("s", action, name, key));
+        }
+        public bool Remove(Student st)
+        {
+            if (_dictStudent.ContainsValue(st))
+            {
+                var key = _dictStudent.FirstOrDefault(x => x.Value == st).Key;
+                StudentPropertyChanged(Action.Remove, "----", key);
+                return _dictStudent.Remove(key);
+            }
+            return false;
         }
     }
 }

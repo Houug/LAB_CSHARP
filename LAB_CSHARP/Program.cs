@@ -35,9 +35,8 @@ namespace LAB_CSHARP
             col1.AddStudents(students);
             col2.AddStudents(students);
 
-            col1.Remove(1);
-            col2.AddDefaults(3);
-            col2[1] = new Student();
+            col1.Remove(new Student(new Person("Vova", "Popov", new DateTime()), Education.Specialist, 201));
+            col2.AddDefaults();
 
             Console.WriteLine(j1.ToString());
             Console.WriteLine(j2.ToString());

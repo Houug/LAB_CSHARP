@@ -16,7 +16,7 @@ namespace LAB_CSHARP
         }
         private void AddLog(object sender, StudentsChangedEventArgs<string> eventArgs)
         {
-            _journalEntries.Add(new JournalEntry(eventArgs.CollectionName, eventArgs.Action, eventArgs.PropertyName, eventArgs.Index));
+            _journalEntries.Add(new JournalEntry(eventArgs.Name, eventArgs.Action, eventArgs.PropertyName, eventArgs.Index));
         }
 
         public override string ToString()

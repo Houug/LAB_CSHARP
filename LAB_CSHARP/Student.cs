@@ -4,16 +4,17 @@ using System.Collections;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel;
 
 namespace LAB_CSHARP
 {
-    public class Student : Person, IEnumerable, IComparer<Student>
+    public class Student : Person, IEnumerable, IComparer<Student>, INotifyPropertyChanged
     {
         private Education _formatOfEducation;
         private int _groupNumber;
         private List<Exam> _passedExams = new List<Exam>();
         private List<Test> _passedTests = new List<Test>();
-
+        public event PropertyChangedEventHandler PropertyChanged;
         public Student(Person personDataValue, Education formatOfEducationValue, int groupNumberValue)
         {
             Name = personDataValue.Name;

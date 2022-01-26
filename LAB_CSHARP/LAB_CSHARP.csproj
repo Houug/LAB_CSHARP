@@ -43,11 +43,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Action.cs" />
     <Compile Include="Education.cs" />
     <Compile Include="Exam.cs" />
     <Compile Include="ExamComparer.cs" />
     <Compile Include="IDateAndCopy.cs" />
     <Compile Include="Journal.cs" />
+    <Compile Include="JournalEntry.cs" />
     <Compile Include="Person.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -55,6 +57,7 @@
     <Compile Include="StudentCollection.cs" />
     <Compile Include="StudentComparer.cs" />
     <Compile Include="StudentEnumerator.cs" />
+    <Compile Include="StudentsChangedEventArgs.cs" />
     <Compile Include="Test.cs" />
     <Compile Include="TestCollections.cs" />
   </ItemGroup>
