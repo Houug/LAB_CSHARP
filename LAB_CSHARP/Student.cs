@@ -1,12 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace LAB_CSHARP
 {
+    [Serializable]
     public class Student : Person, IEnumerable, IComparer<Student>
     {
         private Education _formatOfEducation;
@@ -99,22 +100,6 @@ namespace LAB_CSHARP
             }
         }
 
-        public override object DeepCopy()
-        {
-            Student newStudent = new Student(new Person(Name, Surname, Date), FormatOfEducation, GroupNumber);
-
-            foreach (Exam item in PassedExams)
-            {
-                newStudent.PassedExams.Add((Exam) item.DeepCopy());
-            }
-            foreach (Test item in _passedTests)
-            {
-                newStudent._passedTests.Add((Test) item.DeepCopy());
-            }
-
-            return newStudent;
-        }
-
         public double AverageMark
         {
             get
@@ -204,8 +189,8 @@ namespace LAB_CSHARP
                 }
             }
         }
-        
-        
+
+
 
         public override string ToString()
         {
@@ -243,8 +228,8 @@ namespace LAB_CSHARP
                 case Education.Specialist: education = "Специалитет"; break;
                 case Education.SecondEducation: education = "Второе высшее"; break;
             }
-                
-            
+
+
             return
                 $"Имя: {Name}\nФамилия: {Surname}\nДата рождения: {Date.Day}.{Date.Month}.{Date.Year}\nФорма обучения: {education}\nНомер группы: {_groupNumber}\nЭказмены: \n{examsStr}\nТесты: \n{testsStr}";
         }
@@ -274,6 +259,155 @@ namespace LAB_CSHARP
         public int Compare(Student x, Student y)
         {
             return x.Info.Surname.CompareTo(y.Info.Surname);
+        }
+
+        public Student DeepCopy()
+        {
+            try
+            {
+                MemoryStream stream = new MemoryStream();
+                IFormatter format = new BinaryFormatter();
+                format.Serialize(stream, this);
+                stream.Seek(0, SeekOrigin.Begin);
+                return (Student)format.Deserialize(stream);
+            }
+            catch
+            {
+                Console.WriteLine("ERROR");
+                return new Student();
+            }
+        }
+        public bool Save(string fileName)
+        {
+            bool result = true;
+            try
+            {
+                BinaryFormatter format = new BinaryFormatter();
+                FileStream file = new FileStream(fileName, FileMode.OpenOrCreate);
+                format.Serialize(file, this);
+            }
+            catch
+            {
+                result = false;
+            }
+            return result;
+        }
+        public bool Load(string fileName)
+        {
+            bool result = true;
+            Student oldStudent = new Student();
+            oldStudent.Info = Info;
+            oldStudent.FormatOfEducation = FormatOfEducation;
+            oldStudent.PassedExams = PassedExams;
+            oldStudent.PassedTests = PassedTests;
+            oldStudent.GroupNumber = GroupNumber;
+            Console.WriteLine(oldStudent.ToString());
+            try
+            {
+                BinaryFormatter format = new BinaryFormatter();
+                FileStream file = new FileStream(fileName, FileMode.OpenOrCreate);
+                Student newStudent = (Student)format.Deserialize(file);
+
+                Info = newStudent.Info;
+                FormatOfEducation = newStudent.FormatOfEducation;
+                PassedExams = newStudent.PassedExams;
+                PassedTests = newStudent.PassedTests;
+                GroupNumber = newStudent.GroupNumber;
+            }
+            catch
+            {
+                Info = oldStudent.Info;
+                FormatOfEducation = oldStudent.FormatOfEducation;
+                PassedExams = oldStudent.PassedExams;
+                PassedTests = oldStudent.PassedTests;
+                GroupNumber = oldStudent.GroupNumber;
+                result = false;
+            }
+            return result;
+        }
+        static public bool Save(string fileName, Student obj)
+        {
+            bool result = true;
+            try
+            {
+                BinaryFormatter format = new BinaryFormatter();
+                FileStream file = new FileStream(fileName, FileMode.OpenOrCreate);
+
+                format.Serialize(file, obj);
+            }
+            catch
+            {
+                result = false;
+            }
+            return result;
+        }
+        public static bool Load(string fileName, Student obj)
+        {
+            bool result = true;
+            Student oldStudent = new Student();
+            oldStudent.Info = obj.Info;
+            oldStudent.FormatOfEducation = obj.FormatOfEducation;
+            oldStudent.PassedExams = obj.PassedExams;
+            oldStudent.PassedTests = obj.PassedTests;
+            oldStudent.GroupNumber = obj.GroupNumber;
+
+            try
+            {
+                BinaryFormatter format = new BinaryFormatter();
+                FileStream file = new FileStream(fileName, FileMode.OpenOrCreate);
+                Student newStudent = (Student)format.Deserialize(file);
+
+                obj.Info = newStudent.Info;
+                obj.FormatOfEducation = newStudent.FormatOfEducation;
+                obj.PassedExams = newStudent.PassedExams;
+                obj.PassedTests = newStudent.PassedTests;
+                obj.GroupNumber = newStudent.GroupNumber;
+            }
+            catch
+            {
+                obj.Info = oldStudent.Info;
+                obj.FormatOfEducation = oldStudent.FormatOfEducation;
+                obj.PassedExams = oldStudent.PassedExams;
+                obj.PassedTests = oldStudent.PassedTests;
+                obj.GroupNumber = oldStudent.GroupNumber;
+                result = false;
+
+            }
+            return result;
+        }
+        public bool AddFromConsole()
+        {
+            bool result = true;
+            Console.WriteLine("Введите данные для инициализации поля Экзамены. \n " +
+                "В названии предмета допустимы исключительно английские буквы. \n " +
+                "При вводе оценки используйте исключительно числа от 1 до 5 \n" +
+                "После завершения ввода каждого поля нажмите Enter");
+            try
+            {
+                Console.WriteLine("Название предмета");
+                string newSubject = Console.ReadLine();
+
+                Console.WriteLine("Оценка");
+                var newString = Console.ReadLine();
+                //Проверка с помощью регулярных выражений, чтобы в введенной строке было только число от 1 до 5
+                int newMark;
+                (int.TryParse(newString, out newMark);
+
+                Console.WriteLine("Формат ввода даты \n" +
+                    "Год сдачи экзамена.Месяц сдачи экзамена.День сдачи экзамена");
+                var newString1 = Console.ReadLine();
+                DateTime newDate = new DateTime(2020, 12, 30);
+                DateTime.TryParse(newString1, out newDate);
+
+                Console.WriteLine(newDate.ToString("D"));
+                Exam newExam = new Exam(newSubject, newMark, newDate);
+                PassedExams.Add(newExam);
+            }
+            catch
+            {
+                result = false;
+            }
+            return result;
         }
     }
 }

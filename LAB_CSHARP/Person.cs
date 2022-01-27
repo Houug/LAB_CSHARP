@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace LAB_CSHARP
 {
-    public class Person : IDateAndCopy, IComparable, IComparer<Person>
+    public class Person : IComparable, IComparer<Person>
     {
         private string _name;
         private string _surname;
