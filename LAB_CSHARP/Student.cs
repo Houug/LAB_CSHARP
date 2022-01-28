@@ -378,10 +378,6 @@ namespace LAB_CSHARP
         public bool AddFromConsole()
         {
             bool result = true;
-            Console.WriteLine("Введите данные для инициализации поля Экзамены. \n " +
-                "В названии предмета допустимы исключительно английские буквы. \n " +
-                "При вводе оценки используйте исключительно числа от 1 до 5 \n" +
-                "После завершения ввода каждого поля нажмите Enter");
             try
             {
                 Console.WriteLine("Название предмета");
@@ -389,7 +385,6 @@ namespace LAB_CSHARP
 
                 Console.WriteLine("Оценка");
                 var newString = Console.ReadLine();
-                //Проверка с помощью регулярных выражений, чтобы в введенной строке было только число от 1 до 5
                 int newMark;
                 (int.TryParse(newString, out newMark);
 
